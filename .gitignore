@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+*.pth
+*.pt
+checkpoints/
+data/flickr8k/
+data/flickr30k/
+data/processed/
+outputs/
+.venv/
+venv/
+.idea/
+.vscode/

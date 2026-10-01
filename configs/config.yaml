@@ -1,0 +1,54 @@
+dataset:
+  name: "flickr8k"
+  data_dir: "data/flickr8k"
+  image_dir: "data/flickr8k/Images"
+  captions_file: "data/flickr8k/captions.txt"
+  processed_dir: "data/processed"
+  min_freq: 3
+  max_len: 30
+  splits:
+    train_ratio: 0.8
+    val_ratio: 0.1
+    test_ratio: 0.1
+
+model:
+  type: "cnn_lstm"  # Options: cnn_lstm, cnn_transformer
+  encoder:
+    backbone: "resnet50"  # resnet50, resnet101, vgg16, efficientnet_b0
+    embed_size: 256
+    freeze_encoder: true
+  decoder:
+    embed_size: 256
+    hidden_size: 512
+    num_layers: 1
+    dropout: 0.5
+    attention_dim: 256
+    # For Transformer decoder option:
+    nhead: 8
+    num_decoder_layers: 4
+    dim_feedforward: 1024
+
+training:
+  batch_size: 32
+  num_workers: 0  # set 0 for Windows compatibility or fine-tune
+  epochs: 20
+  encoder_lr: 0.0001
+  decoder_lr: 0.0004
+  weight_decay: 0.00001
+  gradient_clip: 5.0
+  patience: 5
+  teacher_forcing_ratio: 1.0
+  label_smoothing: 0.1
+  use_amp: true  # Automatic Mixed Precision
+
+generation:
+  max_length: 30
+  beam_size: 3
+  length_penalty: 0.7
+  temperature: 1.0
+
+experiment:
+  seed: 42
+  experiment_name: "baseline_resnet50_attention"
+  output_dir: "outputs"
+  checkpoint_dir: "checkpoints"
